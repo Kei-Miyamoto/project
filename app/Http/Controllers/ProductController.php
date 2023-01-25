@@ -18,13 +18,12 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * 商品登録画面を表示する
+     * @return view
      */
-    public function create()
+    public function showCreate()
     {
-        //
+        return view('product.create');
     }
 
     /**

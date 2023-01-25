@@ -28,7 +28,7 @@
             </div>
 
             <div class="col-md-12 col-xs-12 my-2 text-right">
-                <button type="submit" class="btn btn-primary col-xs-12">新規登録</button>
+                <button  type="button" onclick="location.href='{{ route('product.show.create') }}'" class="btn btn-primary col-xs-12">新規登録</button>
             </div>
 
             <table class="table table-hover">
