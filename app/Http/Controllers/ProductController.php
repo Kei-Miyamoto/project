@@ -39,8 +39,7 @@ class ProductController extends Controller
 
     /**
      * 商品情報編集画面を表示する
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return view
      */
     public function showEdit()
     {
@@ -59,15 +58,12 @@ class ProductController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * 商品情報詳細画面を表示する
+     * @return view
      */
-    public function update(Request $request, Product $product)
+    public function showDetail()
     {
-        //
+        return view('product.detail');
     }
 
     /**
