@@ -53,7 +53,7 @@
                         <td class="text-center"></td>
                         <td class="text-center"></td>
                         <td class="text-center">
-                            <button type="" class="btn btn-success">詳細</button> 
+                            <button type="button" onclick="location.href='{{ route('product.show.edit') }}'" class="btn btn-success">詳細</button> 
                         </td>
                         <td class="text-center">
                             <button type="" class="btn btn-danger">削除</button>

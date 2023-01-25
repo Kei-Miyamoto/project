@@ -38,14 +38,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
+     * 商品情報編集画面を表示する
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function showEdit()
     {
-        //
+        return view('product.edit');
     }
 
     /**
