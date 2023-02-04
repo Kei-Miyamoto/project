@@ -55,9 +55,9 @@
                             <td class="text-center">{{ $product->product_name }}</td>
                             <td class="text-center">{{ $product->price }}</td>
                             <td class="text-center">{{ $product->stock }}</td>
-                            <td class="text-center">{{ $product->company_id }}</td>
+                                    <td class="text-center">{{ $product->company_name }}</td>
                             <td class="text-center">
-                                <button type="button" onclick="location.href='{{ route('product.show.detail') }}'" class="btn btn-success">詳細</button> 
+                                <button type="button" onclick="location.href='/product/show/detail/{{ $product->id }}'" class="btn btn-success">詳細</button> 
                             </td>
                             <td class="text-center">
                                 <button type="" class="btn btn-danger">削除</button>

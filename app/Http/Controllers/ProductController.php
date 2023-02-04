@@ -17,10 +17,19 @@ class ProductController extends Controller
      */
     public function showHome()
     {
+        // メーカー情報を取得
         $companies = Company::all();
-        $products = Product::all();
+        // 商品じょうを取得
+        $products = DB::table('products')
+                ->select('products.id'
+                        ,'products.product_name'
+                        ,'products.img_path'
+                        ,'products.stock'
+                        ,'products.price'
+                        ,'companies.company_name')
+                ->leftJoin('companies', 'companies.id', '=', 'products.company_id') // メーカー情報をjoinする
+                ->get();
 
-        
         return view('home', ['companies' => $companies, 'products' => $products]);
     }
 
@@ -81,11 +90,18 @@ class ProductController extends Controller
 
     /**
      * 商品情報編集画面を表示する
+     * @param $id 商品ID
      * @return view
      */
-    public function showEdit()
+    public function showEdit($id)
     {
-        return view('product.edit');
+        // 商品情報を取得する
+        $product = DB::table('products')
+                ->where('id', $id)
+                ->first();
+
+        
+        return view('product.edit', ['product' => $product]);
     }
 
     /**
@@ -103,9 +119,19 @@ class ProductController extends Controller
      * 商品情報詳細画面を表示する
      * @return view
      */
-    public function showDetail()
+    public function showDetail($id)
     {
-        return view('product.detail');
+        // 商品情報を取得する
+        $product = DB::table('products')
+                ->where('id', $id)
+                ->first();
+
+        // 商品に登録されているメーカIDからメーカーを取得する
+        $company = DB::table('companies')
+                ->where('id', $product->company_id)
+                ->first();
+
+        return view('product.detail', ['product' => $product, 'company' => $company]);
     }
 
     /**
