@@ -18,6 +18,27 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- torstr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- flash message -->
+    <script>
+        // 成功時
+        @if (Session::has('flash_message_success'))
+            $(function() {
+                toastr.success('{{ session('flash_message_success') }}');
+            });
+        @endif
+        // 失敗時
+        @if (Session::has('flash_message_error'))
+            $(function() {
+                toastr.error('{{ session('flash_message_error') }}');
+            });
+        @endif
+    </script>
 </head>
 <body>
     <div id="app">
@@ -56,8 +77,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

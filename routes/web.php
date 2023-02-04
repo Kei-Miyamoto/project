@@ -21,6 +21,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 // 商品新規登録画面
 Route::get('/product/show/create', 'ProductController@showCreate')->name('product.show.create');
+// 商品新規登録画面
+Route::post('/product/create', 'ProductController@createProduct')->name('product.create');
 // 商品情報詳細画面
 Route::get('/product/show/detail', 'ProductController@showDetail')->name('product.show.detail');
 // 商品情報編集画面
