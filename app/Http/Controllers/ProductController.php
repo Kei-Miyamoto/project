@@ -12,13 +12,16 @@ use Carbon\Carbon;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
+     * 商品情報一覧画面の表示
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function showHome()
     {
-        //
+        $companies = Company::all();
+        $products = Product::all();
+
+        
+        return view('home', ['companies' => $companies, 'products' => $products]);
     }
 
     /**
@@ -27,7 +30,6 @@ class ProductController extends Controller
      */
     public function showCreate()
     {
-        // $product = Product::all();
         $companies = Company::all();
         return view('product.create', ['companies' => $companies]);
     }

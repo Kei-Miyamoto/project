@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 // 商品一覧画面
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'ProductController@showHome')->name('home');
 // 商品新規登録画面
 Route::get('/product/show/create', 'ProductController@showCreate')->name('product.show.create');
 // 商品新規登録画面

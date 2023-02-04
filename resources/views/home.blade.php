@@ -16,7 +16,10 @@
                         <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">メーカー名</label>
                             <select name="" id="" class="col-md-8">
-                                <option value="" >未選択</option>
+                                <option value="">未選択</option>
+                                @foreach($companies as $company)
+                                    <option value="{{ $company->company_name }}">{{ $company->company_name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="text-center my-2">
@@ -45,20 +48,22 @@
                     </tr>
                 </thead>
                 <tbody id="" class="table-striped">
-                    <tr>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center">
-                            <button type="button" onclick="location.href='{{ route('product.show.detail') }}'" class="btn btn-success">詳細</button> 
-                        </td>
-                        <td class="text-center">
-                            <button type="" class="btn btn-danger">削除</button>
-                        </td>
-                    </tr>
+                    @foreach($products as $product)
+                        <tr>
+                            <td class="text-center">{{ $product->id }}</td>
+                            <td class="text-center"><img src="{{ '/storage/product/' .  $product->img_path }}" alt="" width="100" height="100"></td>
+                            <td class="text-center">{{ $product->product_name }}</td>
+                            <td class="text-center">{{ $product->price }}</td>
+                            <td class="text-center">{{ $product->stock }}</td>
+                            <td class="text-center">{{ $product->company_id }}</td>
+                            <td class="text-center">
+                                <button type="button" onclick="location.href='{{ route('product.show.detail') }}'" class="btn btn-success">詳細</button> 
+                            </td>
+                            <td class="text-center">
+                                <button type="" class="btn btn-danger">削除</button>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
