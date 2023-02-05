@@ -16,7 +16,7 @@
                         </div>
                         <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">商品画像</label>
-                            <input id="" class="col-md-8" value="" type="file" disabled>
+                            <img src="{{ '/storage/product/' .  $product->img_path }}" alt="" width="100" height="auto">
                         </div>
                         <div class="text-center col-md-12 myz-1">
                             <label class="col-md-2 col-form-label" for="">商品名</label>
@@ -24,7 +24,7 @@
                         </div>
                         <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">メーカー名</label>
-                            <select name="" id="" class="col-md-8" disabled>
+                            <select name="" id="" class="col-md-8" style="color: black;" disabled>
                                 <option value="" selected>{{ $company->company_name }}</option>
                             </select>
                         </div>

@@ -19,7 +19,7 @@ class ProductController extends Controller
     {
         // メーカー情報を取得
         $companies = Company::all();
-        // 商品じょうを取得
+        // 商品情報を取得
         $products = DB::table('products')
                 ->select('products.id'
                         ,'products.product_name'
