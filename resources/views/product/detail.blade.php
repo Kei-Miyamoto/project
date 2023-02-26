@@ -10,15 +10,16 @@
 
                 <div class="card-body">
                     <form action="">
-                        <div class="text-center col-md-12 myz-1">
+                        <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">商品情報ID</label>
                             <input id="" class="col-md-8" value="{{ $product->id }}" type="" disabled>
                         </div>
                         <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">商品画像</label>
-                            <img src="{{ '/storage/product/' .  $product->img_path }}" alt="" width="100" height="auto">
+                            <img class=
+                            "col-md-8" src="{{ '/storage/product/' .  $product->img_path }}" alt="non-image" width="100" height="auto">
                         </div>
-                        <div class="text-center col-md-12 myz-1">
+                        <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">商品名</label>
                             <input id="" class="col-md-8" value="{{ $product->product_name }}" type="text" disabled>
                         </div>
@@ -41,7 +42,7 @@
                             <textarea id="" class="col-md-8" value="{{ $product->comment }}" type="text" disabled>{{ $product->comment }}</textarea>
                         </div>
                         <div class="text-center my-2">
-                            <button type="button" onclick="location.href='{{ route('product.show.edit') }}'" class="btn btn-primary">編集</button>
+                            <button type="button" onclick="location.href='/product/show/edit/{{ $product->id }}'" class="btn btn-primary">編集</button>
                         </div>
                     </form>
                 </div>

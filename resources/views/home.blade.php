@@ -51,7 +51,7 @@
                     @foreach($products as $product)
                         <tr>
                             <td class="text-center">{{ $product->id }}</td>
-                            <td class="text-center"><img src="{{ '/storage/product/' .  $product->img_path }}" alt="" width="100" height="auto"></td>
+                            <td class="text-center"><img src="{{ '/storage/product/' .  $product->img_path }}" alt="non-image" width="100" height="auto"></td>
                             <td class="text-center">{{ $product->product_name }}</td>
                             <td class="text-center">{{ $product->price }}</td>
                             <td class="text-center">{{ $product->stock }}</td>

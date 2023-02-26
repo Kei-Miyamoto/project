@@ -18,6 +18,7 @@
                         <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">メーカー名</label>
                             <select id="" class="col-md-8" name="companyName" required>
+                                <option value="">未選択</option>
                                 @foreach($companies as $company)
                                     <option value="{{ $company->company_name }}">{{ $company->company_name }}</option>
                                 @endforeach
@@ -33,7 +34,7 @@
                         </div>
                         <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">コメント</label>
-                            <textarea id="" class="col-md-8" value="" type="text" name="comment" required></textarea>
+                            <textarea id="" class="col-md-8" value="" type="text" name="comment"></textarea>
                         </div>
                         <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">商品画像</label>

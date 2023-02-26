@@ -11,43 +11,45 @@ use Carbon\Carbon;
 
 class ProductController extends Controller
 {
+    protected $product;
+    protected $company;
+
+    public function __construct(Product $product, Company $company) {
+        $this->product = $product;
+        $this->company = $company;
+    }
+
     /**
      * 商品情報一覧画面の表示
-     * @return \Illuminate\Http\Response
+     * @return view
+     * @return $companies
+     * @return $products
      */
     public function showHome()
     {
         // メーカー情報を取得
-        $companies = Company::all();
+        $companies = $this->company->getCompanyList();
         // 商品情報を取得
-        $products = DB::table('products')
-                ->select('products.id'
-                        ,'products.product_name'
-                        ,'products.img_path'
-                        ,'products.stock'
-                        ,'products.price'
-                        ,'companies.company_name')
-                ->leftJoin('companies', 'companies.id', '=', 'products.company_id') // メーカー情報をjoinする
-                ->get();
-
+        $products = $this->product->getProductList();
         return view('home', ['companies' => $companies, 'products' => $products]);
     }
 
     /**
      * 商品登録画面を表示する
      * @return view
+     * @return $companies
      */
     public function showCreate()
     {
-        $companies = Company::all();
+        // メーカー情報を取得
+        $companies = $this->company->getCompanyList();
         return view('product.create', ['companies' => $companies]);
     }
 
     /**
      * 商品の新規登録
-     *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return view
      */
     public function createProduct(Request $request)
     {
@@ -55,28 +57,10 @@ class ProductController extends Controller
         \DB::beginTransaction();
         try {
             // 入力されたメーカー名からメーカー情報を取得する
-            $company = DB::table('companies')
-                        ->where('company_name',$request['companyName'])
-                        ->first();
+            $company = $this->company->getCompanyDataByName($request->companyName);
 
-            // 画像がアップされていたらstorageへ保存
-            if ($request->img) {
-                $image = $request->file('img');
-                $path = Storage::put('/public/product', $image);
-                $path = explode('/product/', $path);
-            }
-
-            // 入力情報を商品情報に格納
-            $product = new Product;
-            $product->product_name = $request->productName;
-            $product->company_id = $company->id;
-            $product->price = $request->price;
-            $product->stock = $request->stock;
-            $product->comment = $request->comment;
-            $product->img_path = $path[1] ? $path[1] : null;
-            $product->created_at = Carbon::now();
-            $product->updated_at = Carbon::now();
-            $product->save();
+            // 入力情報を登録
+            $this->product->storeProduct($request, $company);
 
             // 商品情報の登録処理
             \DB::commit();
@@ -92,27 +76,43 @@ class ProductController extends Controller
      * 商品情報編集画面を表示する
      * @param $id 商品ID
      * @return view
+     * @return $product
+     * @return $companies
      */
     public function showEdit($id)
     {
         // 商品情報を取得する
-        $product = DB::table('products')
-                ->where('id', $id)
-                ->first();
+        $product = $this->product->getProductData($id);
 
-        
-        return view('product.edit', ['product' => $product]);
+        // メーカー情報を取得する
+        $companies = $this->company->getCompanyList();
+
+        return view('product.edit', ['product' => $product, 'companies' => $companies]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
+     * 商品の更新
+     * @param  \Illuminate\Http\Request  $request
+     * @return view
      */
-    public function edit(Product $product)
+    public function updateProduct(Request $request, $id)
     {
-        //
+        // トランザクション開始
+        \DB::beginTransaction();
+        try {
+            // 入力されたメーカー名からメーカー情報を取得する
+            $company = $this->company->getCompanyDataByName($request->companyName);
+
+            // 入力情報を更新
+            $this->product->updateProduct($request, $company, $id);
+
+            \DB::commit();
+            \Session::flash('flash_message_success', '商品情報を更新しました');
+        } catch (\Throwable $e) {
+            \DB::rollback();
+            \Session::flash('flash_message_error', '商品情報の更新に失敗しました');
+        }
+        return redirect(route('home'));
     }
 
     /**
@@ -122,14 +122,10 @@ class ProductController extends Controller
     public function showDetail($id)
     {
         // 商品情報を取得する
-        $product = DB::table('products')
-                ->where('id', $id)
-                ->first();
+        $product = $this->product->getProductData($id);
 
         // 商品に登録されているメーカIDからメーカーを取得する
-        $company = DB::table('companies')
-                ->where('id', $product->company_id)
-                ->first();
+        $company = $this->company->getCompanyDataById($product->company_id);
 
         return view('product.detail', ['product' => $product, 'company' => $company]);
     }
