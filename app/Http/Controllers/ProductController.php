@@ -30,7 +30,24 @@ class ProductController extends Controller
         // メーカー情報を取得
         $companies = $this->company->getCompanyList();
         // 商品情報を取得
-        $products = $this->product->getProductList();
+        $products = $this->product->getAllProductList();
+        return view('home', ['companies' => $companies, 'products' => $products]);
+    }
+
+    /**
+     * 商品情報の検索
+     * @return view
+     * @return $products
+     */
+    public function getProductList(Request $request)
+    {
+        // 検索キーワードの取得
+        $search_word = $request->searchWord;
+        $search_company = $request->searchCompany;
+        // 検索結果の取得
+        $products = $this->product->getProductList($search_word, $search_company);
+        // メーカー情報を取得
+        $companies = $this->company->getCompanyList();
         return view('home', ['companies' => $companies, 'products' => $products]);
     }
 

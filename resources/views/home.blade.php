@@ -8,17 +8,17 @@
                 <div class="card-header">検索</div>
 
                 <div class="card-body">
-                    <form action="">
+                    <form method="GET" action="{{ route('product.search') }}">
                         <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">商品名</label>
-                            <input id="" class="col-md-8" value="" type="text">
+                            <input id="" name="searchWord" class="col-md-8" value="" type="text">
                         </div>
                         <div class="text-center col-md-12 my-1">
                             <label class="col-md-2 col-form-label" for="">メーカー名</label>
-                            <select name="" id="" class="col-md-8">
+                            <select name="searchCompany" id="" class="col-md-8">
                                 <option value="">未選択</option>
                                 @foreach($companies as $company)
-                                    <option value="{{ $company->company_name }}">{{ $company->company_name }}</option>
+                                    <option value="{{ $company->id }}">{{ $company->company_name }}</option>
                                 @endforeach
                             </select>
                         </div>

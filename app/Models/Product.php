@@ -14,7 +14,7 @@ class Product extends Model
      * 商品情報一覧の取得
      * @return $obj
      */
-    public function getProductList() {
+    public function getAllProductList() {
         return DB::table('products')
         ->select('products.id'
                 ,'products.product_name'
@@ -25,6 +25,35 @@ class Product extends Model
         ->leftJoin('companies', 'companies.id', '=', 'products.company_id') // メーカー情報をjoinする
         ->orderBy('products.id', 'asc')
         ->get();
+    }
+
+    /**
+     * 検索キーワードによっての商品情報一覧の取得
+     * @param $search_word 商品名キーワード
+     * @param $search_company メーカーID
+     * @return $products 商品情報
+     */
+    public function getProductList($search_word, $search_company) {
+        $query = Product::query();
+        $query->select(
+            'products.id'
+            ,'products.product_name'
+            ,'products.img_path'
+            ,'products.stock'
+            ,'products.price'
+            ,'companies.company_name')
+        ->leftJoin('companies', 'companies.id', '=', 'products.company_id'); // メーカー情報をjoinする
+        // 商品名キーワードが入力されていた場合
+        if ($search_word) {
+            $query->where('products.product_name', 'like', '%'.$search_word.'%'); // 商品名キーワードでの曖昧検索
+        }
+        // メーカー名が入力されていた場合
+        if ($search_company) {
+            $query->where('companies.id', '=', $search_company);
+        }
+        $query->orderBy('products.id', 'asc');
+        $products = $query->get();
+        return $products;
     }
 
     /**
